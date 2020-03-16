@@ -22,14 +22,21 @@ def read_and_save(datapath,savepath):
         dataset = []
         labels = {'man':1,'woman':2}
         for root, dirs, pics in os.walk(datapath, topdown=True):
-            if root == (datapath+'\man'):   
+            if root == (datapath+'/man'):   
                 for pic in pics:
                     im = Image.open(os.path.join(root,pic))
                     dataset.append([im,0])
-            if root == (datapath+'\woman'):
+            if root == (datapath+'/womaan'):
                 for pic in pics:
                     im = Image.open(os.path.join(root,pic))
                     dataset.append([im,1])
+            if root == (datapath+'/cropped'):
+                for pic in pics:
+                    try:
+                        im = Image.open(os.path.join(root,pic))
+                    except:
+                        os.system('rm  '+os.path.join(root,pic))
+                    dataset.append([im,2])
         torch.save(dataset,savepath)
         print('dataset has been updated')
 
